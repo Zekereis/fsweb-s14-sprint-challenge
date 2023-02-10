@@ -5,20 +5,23 @@ const router = express.Router();
 
 const md = require("./middleware");
 
-router.get("/project:id", md.checkProjectId,(req,res,next) => {
+router.get("/", (req,res,next) => {
     try{
-        Project.getProjectId(req.params.id)
+        Project.getAll()
         .then( projects  => {
-            res.json(projects)
+            res.status(200).json(projects)
         })
     }catch(err){
         next(err)
     }
 })
 
-router.post("/project", md.checkPayload,async (req,res,next) => {
+router.post("/", md.checkPayload, async (req,res,next) => {
     try{
-
+        Project.create(req.body)
+        .then( project  => {
+            res.status(200).json(project)
+        })
     }catch(err){
         next(err)
     }
