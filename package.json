@@ -10,7 +10,6 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "rollback": "knex migrate:rollback"
-     
   },
   "repository": {
     "type": "git",
