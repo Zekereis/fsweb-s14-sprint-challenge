@@ -20,7 +20,3 @@ exports.create = async payload => {
     return result;
 }
 
-exports.create = async payload =>{
-    const row = await db("project as p")
-    
-}
