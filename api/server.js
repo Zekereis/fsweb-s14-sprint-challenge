@@ -7,14 +7,14 @@ const server = express();
 
 server.use(express.json());
 
-server.use("./api/project", projectRouter)
-server.use("./api/resource", resourceRouter)
-server.use("./api/task", taskRouter)
+server.use("/api/projects", projectRouter);
+server.use("/api/resources", resourceRouter);
+server.use("/api/tasks", taskRouter);
 
-server.use("*", (req,res) =>{
-    res.status(404).json({
-        message: "Not Found"
-    })
+server.use("*", (req, res) => {
+  res.status(404).json({
+    message: "Not Found",
+  });
 });
 
 module.exports = server;

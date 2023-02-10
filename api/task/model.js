@@ -1,11 +1,34 @@
-const db = require("../../data/dbConfig")
+const db = require("../../data/dbConfig");
 
-exports.getTaskId = async task_id =>{
-    const row = await db("task as t")
-    
-}
+exports.getAll = async () => {
+  const records = await db("tasks as t")
+    .leftJoin("projects as pr", "t.task_id", "pr.project_id")
+    .select(
+      "t.task_id",
+      "t.task_description",
+      "t.task_notes",
+      "t.task_completed",
+      "pr.project_name",
+      "pr.project_description"
+    );
 
-exports.create = async payload =>{
-    const row = await db("task as t")
-    
-}
+  const result = records.map((record) => ({
+    ...record,
+    task_completed: record.task_completed ? true : false,
+  }));
+
+  return result;
+};
+
+exports.create = async (payload) => {
+  const [task_id] = await db("tasks").insert(payload);
+
+  const newTask = await db("tasks").where("task_id", task_id).first();
+
+  const result = {
+    ...newTask,
+    task_completed: newTask.task_completed ? true : false,
+    project_id: newTask.project_id,
+  };
+  return result;
+};
