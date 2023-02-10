@@ -19,3 +19,4 @@ exports.create = async payload => {
         project_completed : newProject.project_completed ? true : false}
     return result;
 }
+
